@@ -11,6 +11,7 @@ import android.support.v7.app.AppCompatActivity;
 public abstract class BaseActivity<V extends BaseView, P extends BasePresenter<V>> extends AppCompatActivity {
 
     private P presenter;
+    private boolean retainInstance;
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
@@ -28,6 +29,22 @@ public abstract class BaseActivity<V extends BaseView, P extends BasePresenter<V
     protected void onStop() {
         super.onStop();
         presenter.onViewDetach();
+    }
+
+    @Override
+    public Object onRetainCustomNonConfigurationInstance() {
+        if (isChangingConfigurations() && shouldRetainInstance())
+            return presenter;
+        else
+            return null;
+    }
+
+    private boolean shouldRetainInstance() {
+        return retainInstance;
+    }
+
+    private void setRetainInstance(boolean retainInstance) {
+        this.retainInstance = retainInstance;
     }
 
     protected P getPresenter() {
