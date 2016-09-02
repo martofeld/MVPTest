@@ -12,6 +12,7 @@ import android.widget.TextView;
 import com.mfeldsztejn.mvptest.R;
 import com.mfeldsztejn.mvptest.base.BaseActivity;
 import com.mfeldsztejn.mvptest.main.behaviours.PullUpBehaviour;
+import com.mfeldsztejn.mvptest.repositories.HistoryRepository;
 
 public class MainActivity extends BaseActivity<MainView, MainPresenter> implements MainView {
 
@@ -91,7 +92,7 @@ public class MainActivity extends BaseActivity<MainView, MainPresenter> implemen
 
     @Override
     public MainPresenter createPresenter() {
-        return new MainPresenter();
+        return new MainPresenter(new HistoryRepository(this));
     }
 
     @Override
@@ -102,6 +103,7 @@ public class MainActivity extends BaseActivity<MainView, MainPresenter> implemen
     @Override
     public void setResult(float result) {
         resultTv.setText(String.valueOf(result));
+        getPresenter().saveResult(num1, num2, operation, result);
         clean(null);
     }
 
