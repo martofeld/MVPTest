@@ -1,6 +1,7 @@
 package com.mfeldsztejn.mvptest.main;
 
 import com.mfeldsztejn.mvptest.base.BasePresenter;
+import com.mfeldsztejn.mvptest.navigation.Router;
 import com.mfeldsztejn.mvptest.repositories.HistoryRepository;
 
 /**
@@ -10,9 +11,11 @@ import com.mfeldsztejn.mvptest.repositories.HistoryRepository;
 public class MainPresenter extends BasePresenter<MainView> {
 
     private HistoryRepository historyRepository;
+    private Router router;
 
-    public MainPresenter(HistoryRepository historyRepository) {
+    public MainPresenter(HistoryRepository historyRepository, Router router) {
         this.historyRepository = historyRepository;
+        this.router = router;
     }
 
     public void calculate(float num1, float num2, String operation) {
@@ -36,6 +39,10 @@ public class MainPresenter extends BasePresenter<MainView> {
                 break;
         }
         view.setResult(result);
+    }
+
+    public void showHistory() {
+        router.goToHistory();
     }
 
     public void saveResult(String num1, String num2, String operation, float result) {

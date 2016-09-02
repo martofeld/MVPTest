@@ -3,6 +3,9 @@ package com.mfeldsztejn.mvptest.main;
 import android.os.Bundle;
 import android.support.design.widget.CoordinatorLayout;
 import android.support.design.widget.Snackbar;
+import android.support.v4.content.ContextCompat;
+import android.view.Menu;
+import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
@@ -12,6 +15,7 @@ import android.widget.TextView;
 import com.mfeldsztejn.mvptest.R;
 import com.mfeldsztejn.mvptest.base.BaseActivity;
 import com.mfeldsztejn.mvptest.main.behaviours.PullUpBehaviour;
+import com.mfeldsztejn.mvptest.navigation.Router;
 import com.mfeldsztejn.mvptest.repositories.HistoryRepository;
 
 public class MainActivity extends BaseActivity<MainView, MainPresenter> implements MainView {
@@ -30,6 +34,22 @@ public class MainActivity extends BaseActivity<MainView, MainPresenter> implemen
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
         initViews();
+    }
+
+    @Override
+    public boolean onCreateOptionsMenu(Menu menu) {
+        getMenuInflater().inflate(R.menu.main_activity_menu, menu);
+        MenuItem item = menu.getItem(0);
+        item.setIcon(ContextCompat.getDrawable(this, R.drawable.ic_history));
+        return super.onCreateOptionsMenu(menu);
+    }
+
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        if (item.getItemId() == R.id.history) {
+            getPresenter().showHistory();
+        }
+        return super.onOptionsItemSelected(item);
     }
 
     private void initViews() {
@@ -92,7 +112,7 @@ public class MainActivity extends BaseActivity<MainView, MainPresenter> implemen
 
     @Override
     public MainPresenter createPresenter() {
-        return new MainPresenter(new HistoryRepository(this));
+        return new MainPresenter(new HistoryRepository(this), new Router(this));
     }
 
     @Override
