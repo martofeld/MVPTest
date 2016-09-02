@@ -10,4 +10,6 @@ public interface MainView extends BaseView {
     void setResult(float result);
 
     void setSnackBarError(String error);
+
+    void goToHistory();
 }

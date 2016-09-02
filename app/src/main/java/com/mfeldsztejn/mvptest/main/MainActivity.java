@@ -14,8 +14,8 @@ import android.widget.TextView;
 
 import com.mfeldsztejn.mvptest.R;
 import com.mfeldsztejn.mvptest.base.BaseActivity;
+import com.mfeldsztejn.mvptest.history.HistoryActivity;
 import com.mfeldsztejn.mvptest.main.behaviours.PullUpBehaviour;
-import com.mfeldsztejn.mvptest.navigation.Router;
 import com.mfeldsztejn.mvptest.repositories.HistoryRepository;
 
 public class MainActivity extends BaseActivity<MainView, MainPresenter> implements MainView {
@@ -112,7 +112,7 @@ public class MainActivity extends BaseActivity<MainView, MainPresenter> implemen
 
     @Override
     public MainPresenter createPresenter() {
-        return new MainPresenter(new HistoryRepository(this), new Router(this));
+        return new MainPresenter(new HistoryRepository(this));
     }
 
     @Override
@@ -130,5 +130,10 @@ public class MainActivity extends BaseActivity<MainView, MainPresenter> implemen
     @Override
     public void setSnackBarError(String error) {
         Snackbar.make(root, error, Snackbar.LENGTH_SHORT).show();
+    }
+
+    @Override
+    public void goToHistory() {
+        HistoryActivity.start(this);
     }
 }
