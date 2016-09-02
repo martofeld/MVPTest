@@ -123,7 +123,6 @@ public class MainActivity extends BaseActivity<MainView, MainPresenter> implemen
     @Override
     public void setResult(float result) {
         resultTv.setText(String.valueOf(result));
-        getPresenter().saveResult(num1, num2, operation, result);
         clean(null);
     }
 
