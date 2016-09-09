@@ -1,7 +1,6 @@
 package com.mfeldsztejn.mvptest.main;
 
 import com.mfeldsztejn.mvptest.base.BasePresenter;
-import com.mfeldsztejn.mvptest.navigation.Router;
 import com.mfeldsztejn.mvptest.repositories.HistoryRepository;
 
 /**
@@ -11,16 +10,15 @@ import com.mfeldsztejn.mvptest.repositories.HistoryRepository;
 public class MainPresenter extends BasePresenter<MainView> {
 
     private HistoryRepository historyRepository;
-    private Router router;
 
-    public MainPresenter(HistoryRepository historyRepository, Router router) {
+    public MainPresenter(HistoryRepository historyRepository) {
         this.historyRepository = historyRepository;
-        this.router = router;
     }
 
     public void calculate(float num1, float num2, String operation) {
         if (num2 == 0 && operation.equals("/")) {
-            view.setSnackBarError("No se puede dividir por 0!");
+            if (getView() != null)
+                getView().setSnackBarError("No se puede dividir por 0!");
             return;
         }
         float result = 0;
@@ -38,14 +36,17 @@ public class MainPresenter extends BasePresenter<MainView> {
                 result = num1 / num2;
                 break;
         }
-        view.setResult(result);
+        if (getView() != null)
+            getView().setResult(result);
+        saveResult(num1, num2, operation, result);
     }
 
     public void showHistory() {
-        router.goToHistory();
+        if (getView() != null)
+            getView().goToHistory();
     }
 
-    public void saveResult(String num1, String num2, String operation, float result) {
+    private void saveResult(float num1, float num2, String operation, float result) {
         String value = num1 + operation + num2 + "=" + result;
         historyRepository.save(value);
     }

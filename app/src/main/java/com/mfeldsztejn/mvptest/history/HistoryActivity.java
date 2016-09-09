@@ -1,5 +1,7 @@
 package com.mfeldsztejn.mvptest.history;
 
+import android.content.Context;
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
@@ -14,6 +16,10 @@ import java.util.List;
 public class HistoryActivity extends BaseActivity<HistoryView, HistoryPresenter> implements HistoryView {
 
     private RecyclerView recyclerView;
+
+    public static void start(Context context) {
+        context.startActivity(new Intent(context, HistoryActivity.class));
+    }
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {

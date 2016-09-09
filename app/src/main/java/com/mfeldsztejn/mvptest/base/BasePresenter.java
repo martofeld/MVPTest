@@ -2,15 +2,17 @@ package com.mfeldsztejn.mvptest.base;
 
 import android.support.annotation.Nullable;
 
+import java.lang.ref.WeakReference;
+
 /**
  * Created by mfeldsztejn on 8/27/16.
  */
 
 public abstract class BasePresenter<V extends BaseView> {
-    protected V view;
+    protected WeakReference<V> view;
 
     public void onViewAttach(V view) {
-        this.view = view;
+        this.view = new WeakReference<>(view);
     }
 
     public void onViewDetach() {
@@ -18,11 +20,11 @@ public abstract class BasePresenter<V extends BaseView> {
     }
 
     public boolean isViewAttached() {
-        return view != null;
+        return view != null && view.get() != null;
     }
 
     @Nullable
     public V getView() {
-        return view;
+        return view != null ? view.get() : null;
     }
 }
