@@ -14,6 +14,9 @@ public class HistoryPresenter extends BasePresenter<HistoryView> {
     public HistoryPresenter(HistoryRepository historyRepository) {
         this.historyRepository = historyRepository;
     }
+    
+    public void testMethod(){
+    }
 
     @Override
     public void onViewAttach(HistoryView view) {
