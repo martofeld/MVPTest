@@ -5,3 +5,4 @@
 ### It consists of two activities:
  - The main activity with the calculator
  - The history activity to review previous entries
+ 
